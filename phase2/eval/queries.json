@@ -1,0 +1,127 @@
+[
+  {
+    "id": "d01",
+    "type": "direct",
+    "query": "What does Attack Success Rate (ASR) measure in HarmBench, and what are its known limitations?",
+    "expected_sources": ["harmbench"]
+  },
+  {
+    "id": "d02",
+    "type": "direct",
+    "query": "How does the Crescendo attack gradually escalate harmful requests across conversation turns?",
+    "expected_sources": ["crescendo"]
+  },
+  {
+    "id": "d03",
+    "type": "direct",
+    "query": "What safety risk categories does the Aegis 2.0 taxonomy define?",
+    "expected_sources": ["aegis2"]
+  },
+  {
+    "id": "d04",
+    "type": "direct",
+    "query": "How does SafeDecoding modify the token generation process to defend against jailbreaks?",
+    "expected_sources": ["safedecoding"]
+  },
+  {
+    "id": "d05",
+    "type": "direct",
+    "query": "What is the PAIR attack method and how does it use an attacker LLM to jailbreak a target model?",
+    "expected_sources": ["pair"]
+  },
+  {
+    "id": "d06",
+    "type": "direct",
+    "query": "How does the Agent Smith attack propagate jailbreaks across multiple multimodal LLM agents?",
+    "expected_sources": ["agentsmith"]
+  },
+  {
+    "id": "d07",
+    "type": "direct",
+    "query": "What are the key risk categories in the NIST AI Risk Management Framework?",
+    "expected_sources": ["nist.ai.100-1"]
+  },
+  {
+    "id": "d08",
+    "type": "direct",
+    "query": "What types of harmful behaviors does the AgentHarm benchmark evaluate in LLM agents?",
+    "expected_sources": ["agentharm"]
+  },
+  {
+    "id": "d09",
+    "type": "direct",
+    "query": "How does ArtPrompt use ASCII art to bypass LLM safety filters?",
+    "expected_sources": ["artprompt"]
+  },
+  {
+    "id": "d10",
+    "type": "direct",
+    "query": "What are the two failure modes of LLM safety training identified in 'Jailbroken: How Does LLM Safety Training Fail?'",
+    "expected_sources": ["how_do_llms_fail"]
+  },
+  {
+    "id": "s01",
+    "type": "synthesis",
+    "query": "Compare the PAIR and Crescendo jailbreak attack strategies. How do they differ in their approach to bypassing safety guardrails?",
+    "expected_sources": ["pair", "crescendo"]
+  },
+  {
+    "id": "s02",
+    "type": "synthesis",
+    "query": "How do the Foot-in-the-Door and Crescendo multi-turn attacks differ in their psychological manipulation strategies?",
+    "expected_sources": ["fitd", "crescendo"]
+  },
+  {
+    "id": "s03",
+    "type": "synthesis",
+    "query": "Compare the automated red teaming approaches of GOAT and X-Teaming. What are the similarities?",
+    "expected_sources": ["goat", "xteaming"]
+  },
+  {
+    "id": "s04",
+    "type": "synthesis",
+    "query": "How do HarmBench and SORRY-Bench differ in their approach to evaluating LLM safety refusal behaviors?",
+    "expected_sources": ["harmbench", "sorrybench"]
+  },
+  {
+    "id": "s05",
+    "type": "synthesis",
+    "query": "What are the connections between the self-jailbreaking phenomenon and the failure modes of safety training described by Wei et al.?",
+    "expected_sources": ["self_jailbreaking", "how_do_llms_fail"]
+  },
+  {
+    "id": "e01",
+    "type": "edge_case",
+    "query": "Does the corpus contain evidence about using watermarking techniques to detect AI-generated jailbreak prompts?",
+    "expected_sources": [],
+    "note": "Topic not covered in corpus — system should flag missing evidence"
+  },
+  {
+    "id": "e02",
+    "type": "edge_case",
+    "query": "What does the corpus say about jailbreak attacks using formal maths?",
+    "expected_sources": [],
+    "note": "Topic not covered — system should flag missing evidence"
+  },
+  {
+    "id": "e03",
+    "type": "edge_case",
+    "query": "Is there evidence in the corpus that reinforcement learning from human feedback (RLHF) fully prevents jailbreak attacks?",
+    "expected_sources": ["beavertails", "how_do_llms_fail"],
+    "note": "Corpus suggests RLHF is insufficient — system should present nuanced answer"
+  },
+  {
+    "id": "e04",
+    "type": "edge_case",
+    "query": "Does the corpus contain information about the legal implications of publishing jailbreak research?",
+    "expected_sources": [],
+    "note": "Topic not covered — system should flag missing evidence"
+  },
+  {
+    "id": "e05",
+    "type": "edge_case",
+    "query": "What claims does the corpus make about the effectiveness of constitutional AI as a defense against jailbreaks?",
+    "expected_sources": [],
+    "note": "Minimal/no direct coverage — system should flag limited evidence"
+  }
+]

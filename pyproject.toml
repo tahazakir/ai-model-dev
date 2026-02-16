@@ -1,0 +1,17 @@
+[project]
+name = "ai-model-dev"
+version = "0.1.0"
+description = "RAG pipeline for LLM jailbreaking safety research"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "chromadb>=1.0.0",
+    "docling>=2.71.0",
+    "habanero>=2.3.0",
+    "httpx>=0.28.1",
+    "numpy>=2.4.2",
+    "ollama>=0.6.1",
+    "pandas>=2.3.3",
+    "pypdf>=6.7.0",
+    "sentence-transformers>=4.1.0",
+]
