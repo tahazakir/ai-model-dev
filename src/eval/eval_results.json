@@ -1,0 +1,816 @@
+{
+  "run_timestamp": "2026-02-24T07:48:01Z",
+  "total_queries": 20,
+  "successful": 20,
+  "total_time_s": 329.8,
+  "aggregate_metrics": {
+    "avg_citation_precision": 0.8,
+    "avg_groundedness": 0.8,
+    "avg_source_recall": 0.9688
+  },
+  "results": [
+    {
+      "query_id": "d01",
+      "query_type": "direct",
+      "query_text": "What does Attack Success Rate (ASR) measure in HarmBench, and what are its known limitations?",
+      "answer": "## Attack Success Rate (ASR) in HarmBench\n\n### Definition and Measurement\n\nIn HarmBench, Attack Success Rate (ASR) is defined as **the percentage of test cases that elicit a given harmful behavior from a target model**. [harmbench, harmbench_c06] More specifically, red teaming methods are evaluated by designing test cases {x\u2081, x\u2082, ..., x\u2099} intended to elicit a target behavior y from LLMs, with ASR being the primary measure of a red teaming method's success. [harmbench, harmbench_c06]\n\n### Key Findings and Limitations\n\nThe HarmBench research reveals several important limitations regarding ASR as an evaluation metric:\n\n**Non-uniform effectiveness across attacks and defenses:** No current attack or defense method is uniformly effective across all models. All attacks show low ASR on at least one LLM, and all LLMs demonstrate poor robustness against at least one attack. [harmbench, harmbench_c18]\n\n**Variation by behavior type:** ASR varies significantly depending on the type of behavior being evaluated. Contextual behaviors show considerably higher ASR than standard behaviors, which is concerning because these represent more specific harmful tasks that would be differentially more harmful for LLMs to exhibit. [harmbench, harmbench_c47], [harmbench, harmbench_c18] Copyright behaviors show relatively low ASR due to the use of stricter hashing-based classification requiring actual copyrighted text in completions. [harmbench, harmbench_c18]\n\n**Model-dependent variation:** ASR differs substantially across different models for the same semantic categories, suggesting that training procedures and data significantly influence robustness. [harmbench, harmbench_c18]",
+      "latency_ms": 5528.530836105347,
+      "num_chunks_retrieved": 5,
+      "retrieved_sources": [
+        "crescendo",
+        "agentharm",
+        "harmbench"
+      ],
+      "expected_sources": [
+        "harmbench"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 7,
+        "valid_citations": 7,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "harmbench_c06",
+          "harmbench_c06",
+          "harmbench_c18",
+          "harmbench_c47",
+          "harmbench_c18",
+          "harmbench_c18",
+          "harmbench_c18"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d02",
+      "query_type": "direct",
+      "query_text": "How does the Crescendo attack gradually escalate harmful requests across conversation turns?",
+      "answer": "# How Crescendo Gradually Escalates Harmful Requests\n\nCrescendo escalates harmful requests through a **progressive intensification strategy** that builds on the model's own outputs rather than explicit user directives.\n\n## Progressive Topic Escalation\n\nThe attack begins with an **innocuous topic linked to the target task** and progressively intensifies across turns [crescendo, crescendo_c06]. Crucially, the user makes \"no or minimal direct references to the target task\" [crescendo, crescendo_c06], instead allowing the model's responses to guide the direction of the conversation toward the harmful objective.\n\n## Psychological \"Foot-in-the-Door\" Approach\n\nThe escalation strategy mirrors the **'foot-in-the-door' psychological tactic**, where \"agreeing to a small, initial request increases the likelihood of complying with subsequent, larger demands\" [crescendo, crescendo_c06]. This incremental nature helps bypass safety defenses \"especially ones designed to react mainly to the user's prompts\" [crescendo, crescendo_c06].\n\n## Adversary Control Through Iteration\n\nA key aspect of the escalation is that **the adversary can tailor responses precisely through iterative refinement**. For example, \"the adversary may choose to iterate the prompt 'make it angry' multiple times until the output meets their expectations\" [crescendo, crescendo_c06]. This allows fine-grained control over how each turn escalates the harmful content.\n\nThe technique fundamentally exploits the model's own responses to direct escalation, rather than requiring explicit harmful prompts at each step [crescendo, crescendo_c38].",
+      "latency_ms": 3458.8961601257324,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "crescendo"
+      ],
+      "expected_sources": [
+        "crescendo"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 6,
+        "valid_citations": 6,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "crescendo_c06",
+          "crescendo_c06",
+          "crescendo_c06",
+          "crescendo_c06",
+          "crescendo_c06",
+          "crescendo_c38"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 2,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d03",
+      "query_type": "direct",
+      "query_text": "What safety risk categories does the Aegis 2.0 taxonomy define?",
+      "answer": "# Aegis 2.0 Safety Risk Taxonomy Categories\n\nThe Aegis 2.0 taxonomy defines an extensive risk classification system organized into multiple tiers:\n\n## Core Categories\nThe taxonomy includes **12 core categories** [aegis2, aegis2_c08]:\n1. Hate/Identity\n2. Suicide and Self Harm\n3. Guns/Illegal Weapons\n4. PII/Privacy\n5. Criminal Planning/Confessions\n6. Controlled/Regulated Substances\n7. Sexual\n8. Violence\n9. Threat\n10. Sexual Minor\n11. Harassment\n12. Profanity\n13. Other [aegis2, aegis2_c09]\n\n## Fine-Grained Categories\nAdditionally, there are **9 fine-grained risk categories** [aegis2, aegis2_c08]:\n- Illegal Activity\n- Immoral/Unethical\n- Unauthorized Advice\n- Political/Misinformation/Conspiracy\n- Fraud/Deception\n- Copyright/Trademark/Plagiarism\n- High Risk Gov. Decision Making\n- Malware\n- Manipulation [aegis2, aegis2_c09]\n\n## Special Classification Labels\nBeyond these risk categories, the taxonomy also includes [aegis2, aegis2_c09]:\n- **Safe**: for content that does not violate risk categories\n- **Needs Caution**: for ambiguous instances where there is insufficient context to determine safety\n\nThe \"Other\" category is extensible and allows annotators to identify unsafe content not captured by predefined categories through free-text descriptions [aegis2, aegis2_c29].",
+      "latency_ms": 4298.966884613037,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "aegis2"
+      ],
+      "expected_sources": [
+        "aegis2"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 6,
+        "valid_citations": 6,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "aegis2_c08",
+          "aegis2_c09",
+          "aegis2_c08",
+          "aegis2_c09",
+          "aegis2_c09",
+          "aegis2_c29"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d04",
+      "query_type": "direct",
+      "query_text": "How does SafeDecoding modify the token generation process to defend against jailbreaks?",
+      "answer": "SafeDecoding modifies the token generation process through a safety-aware decoding strategy that works in two ways:\n\n**Probability Manipulation**: SafeDecoding identifies safety disclaimers among the top probability tokens and amplifies their probabilities, while simultaneously attenuating the probabilities of token sequences aligned with jailbreak attack objectives [safedecoding, safedecoding_c02].\n\n**Distribution Reweighting**: The mechanism is based on a key observation that \"even though probabilities of tokens representing harmful contents outweigh those representing harmless responses, responses containing safety disclaimers still appear among the top tokens when tokens are sorted in descending order by probability\" [safedecoding, safedecoding_c25]. SafeDecoding leverages this by defining a new token distribution based on probabilities from both the original model and an expert model, then samples tokens from this modified distribution to generate responses [safedecoding, safedecoding_c04].\n\nThis approach is computationally lightweight\u2014incurring negligible computation overhead\u2014while allowing LLMs to remain helpful for benign user queries [safedecoding, safedecoding_c04]. The method was evaluated against six state-of-the-art jailbreak attacks across five LLMs and consistently outperformed six baseline defense methods [safedecoding, safedecoding_c02].",
+      "latency_ms": 2866.8341636657715,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "safedecoding"
+      ],
+      "expected_sources": [
+        "safedecoding"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 5,
+        "valid_citations": 5,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "safedecoding_c02",
+          "safedecoding_c25",
+          "safedecoding_c04",
+          "safedecoding_c04",
+          "safedecoding_c02"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d05",
+      "query_type": "direct",
+      "query_text": "What is the PAIR attack method and how does it use an attacker LLM to jailbreak a target model?",
+      "answer": "# The PAIR Attack Method\n\n## Overview\n\nPAIR (Prompt Automatic Iterative Refinement) is a method for automatically discovering prompt-level jailbreaks against black-box LLMs. [pair, pair_c02] It generates semantic jailbreaks that work with only black-box access to a target model, and is inspired by social engineering attacks. [pair, pair_c02]\n\n## How It Works: The Four-Step Process\n\nPAIR operates through a collaborative interaction between two LLMs\u2014an attacker model and a target model\u2014following this procedure: [pair, pair_c06]\n\n1. **Attack generation**: The attacker LLM receives targeted, yet flexible system prompts that direct it to generate candidate jailbreak prompts designed to fool the target model. [pair, pair_c06]\n\n2. **Target response**: The candidate prompt is submitted to the target model, which produces a response. [pair, pair_c06]\n\n3. **Jailbreak scoring**: Both the prompt and response are evaluated by a JUDGE component to assign a score indicating whether a jailbreak occurred. [pair, pair_c06]\n\n4. **Iterative refinement**: If the jailbreak was unsuccessful, the prompt, response, and score are fed back to the attacker LLM, which generates a refined candidate prompt based on this feedback. [pair, pair_c06] This back-and-forth interaction continues until a successful jailbreak is found.\n\n## Efficiency and Accessibility\n\nA key advantage of PAIR is its efficiency: it often requires fewer than twenty queries to produce a jailbreak\u2014orders of magnitude more efficient than existing algorithms. [pair, pair_c02] Additionally, PAIR does not require GPU access, making it inexpensive and accessible for red teaming purposes. [pair, pair_c19]",
+      "latency_ms": 3582.895040512085,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "pair"
+      ],
+      "expected_sources": [
+        "pair"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 9,
+        "valid_citations": 9,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "pair_c02",
+          "pair_c02",
+          "pair_c06",
+          "pair_c06",
+          "pair_c06",
+          "pair_c06",
+          "pair_c06",
+          "pair_c02",
+          "pair_c19"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d06",
+      "query_type": "direct",
+      "query_text": "How does the Agent Smith attack propagate jailbreaks across multiple multimodal LLM agents?",
+      "answer": "# How Agent Smith Attack Propagates Jailbreaks\n\n## Propagation Mechanism\n\nThe Agent Smith attack propagates jailbreaks through **infectious dynamics in multi-agent environments**. The core mechanism is straightforward: an adversary jailbreaks a single agent by introducing an adversarial image, and then \"without any further intervention from the adversary, (almost) all agents will become infected exponentially fast and exhibit harmful behaviors\" [agentsmith, agentsmith_c02].\n\n## Implementation Method\n\nThe researchers demonstrate this propagation using **randomized pairwise chat as a proof-of-concept instantiation for multi-agent interaction** [agentsmith, agentsmith_c02]. This approach formalizes \"the infectious dynamics of randomized pairwise chat in a multi-agent environment\" and establishes \"universal conditions of infectious jailbreak\" [agentsmith, agentsmith_c06].\n\n## Key Characteristic\n\nThe attack is remarkably efficient: feeding \"an (infectious) adversarial image into the memory of any randomly chosen agent is sufficient to achieve infectious jailbreak\" [agentsmith, agentsmith_c02]. This single point of entry\u2014requiring only that one agent in the system receives the adversarial image\u2014is sufficient for the jailbreak to spread across the entire multi-agent network exponentially.\n\nThe researchers validated this concept at scale, simulating \"multi-agent environments containing up to one million LLaVA-1.5 agents\" [agentsmith, agentsmith_c02], demonstrating the attack's potential severity in large-scale deployments.",
+      "latency_ms": 3790.3501987457275,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "agentsmith"
+      ],
+      "expected_sources": [
+        "agentsmith"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 5,
+        "valid_citations": 5,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "agentsmith_c02",
+          "agentsmith_c02",
+          "agentsmith_c06",
+          "agentsmith_c02",
+          "agentsmith_c02"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 2,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d07",
+      "query_type": "direct",
+      "query_text": "What are the key risk categories in the NIST AI Risk Management Framework?",
+      "answer": "# Key Risk Categories in the NIST AI Risk Management Framework\n\nThe NIST AI Risk Management Framework organizes risk management activities into **four core functions** [nist.ai.100-1, nist.ai.100-1_c28]:\n\n1. **GOVERN** \u2013 Governance is designed as a cross-cutting function to inform and be infused throughout the other three functions [nist.ai.100-1, nist.ai.100-1_c28].\n\n2. **MAP** \u2013 This function involves identifying and mapping risks [nist.ai.100-1, nist.ai.100-1_c28].\n\n3. **MEASURE** \u2013 This function involves measuring and evaluating identified risks [nist.ai.100-1, nist.ai.100-1_c28].\n\n4. **MANAGE** \u2013 This function involves managing prioritized risks through treatment plans and resource allocation [nist.ai.100-1, nist.ai.100-1_c39].\n\n## Structure Within Functions\n\nEach of these high-level functions is further broken down into **categories and subcategories**, which are then subdivided into specific actions and outcomes [nist.ai.100-1, nist.ai.100-1_c28]. Importantly, these actions do not constitute a checklist or necessarily an ordered set of steps, and the functions should be performed iteratively throughout the AI system lifecycle [nist.ai.100-1, nist.ai.100-1_c28].\n\nFor example, the **MANAGE function** contains three main categories: MANAGE 1 (prioritizing and responding to risks), MANAGE 2 (maximizing benefits and minimizing impacts), and MANAGE 3 (managing third-party AI risks) [nist.ai.100-1, nist.ai.100-1_c39].",
+      "latency_ms": 5426.467180252075,
+      "num_chunks_retrieved": 5,
+      "retrieved_sources": [
+        "frontier_ai_risk_management",
+        "nist.ai.100-1"
+      ],
+      "expected_sources": [
+        "nist.ai.100-1"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 0,
+        "valid_citations": 0,
+        "invalid_citations": 0,
+        "citation_precision": 0.0,
+        "cited_ids": [],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": false,
+        "grounded_citations": 0,
+        "ungrounded_citations": 0,
+        "groundedness_score": 0.0,
+        "note": "No citations found in answer"
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d08",
+      "query_type": "direct",
+      "query_text": "What types of harmful behaviors does the AgentHarm benchmark evaluate in LLM agents?",
+      "answer": "# AgentHarm Benchmark: Harmful Behaviors Evaluated\n\nAgentHarm evaluates LLM agents across **11 distinct harm categories** [agentharm, agentharm_c08]:\n\n1. Fraud\n2. Cybercrime\n3. Self-harm\n4. Harassment\n5. Sexual content\n6. Copyright infringement\n7. Drugs\n8. Disinformation\n9. Hate speech\n10. Violence\n11. Terrorism\n\n## Scale and Structure\n\nThe benchmark contains **110 unique base behaviors** with **440 total behaviors** when augmentations are included [agentharm, agentharm_c08]. These behaviors are explicitly designed to be malicious and require agents to execute multi-step tasks [agentharm, agentharm_c02].\n\n## Key Distinguishing Feature\n\nA critical aspect of AgentHarm's evaluation is that it measures behaviors where agents must **execute multi-step tool calls** to complete harmful tasks. As an example, rather than simply asking \"How do I make a pipe bomb?\", AgentHarm evaluates requests like \"Order online all necessary ingredients to make a pipe bomb and get them delivered to my home without getting flagged by authorities\" [agentharm, agentharm_c03]. This reflects the greater misuse risk posed by LLM agents compared to simple chatbots, since agents can leverage external tools and execute complex, multi-stage tasks.",
+      "latency_ms": 12487.86211013794,
+      "num_chunks_retrieved": 6,
+      "retrieved_sources": [
+        "agentharm",
+        "harmbench"
+      ],
+      "expected_sources": [
+        "agentharm"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 4,
+        "valid_citations": 4,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "agentharm_c08",
+          "agentharm_c08",
+          "agentharm_c02",
+          "agentharm_c03"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d09",
+      "query_type": "direct",
+      "query_text": "How does ArtPrompt use ASCII art to bypass LLM safety filters?",
+      "answer": "# How ArtPrompt Uses ASCII Art to Bypass LLM Safety Filters\n\nArtPrompt exploits a fundamental vulnerability in LLM safety mechanisms by leveraging their poor ability to recognize and interpret ASCII art representations of sensitive words.\n\n## Core Mechanism\n\nThe attack works based on two key insights [artprompt, artprompt_c10]:\n\n1. **Recognition Failure**: LLMs struggle to recognize words when substituted with ASCII art, which increases the probability of bypassing safety measures.\n\n2. **Contextual Inference**: Despite difficulty interpreting ASCII art representations directly, LLMs can still infer what the masked word means based on the surrounding context in the prompt.\n\n## Two-Step Attack Process\n\nArtPrompt consists of two sequential steps [artprompt, artprompt_c10]:\n\n1. **Word Masking**: The attacker identifies and masks sensitive words in the prompt that would normally trigger safety rejection.\n\n2. **Cloaked Prompt Generation**: An ASCII art generator replaces the identified words with ASCII art representations, which are then substituted into the original prompt before sending it to the target LLM.\n\n## Why It Works\n\nThe fundamental reason ArtPrompt succeeds is that safety alignment techniques assume prompts are \"solely interpreted by semantics\" [artprompt, artprompt_c02]. However, ASCII art relies on visual/spatial arrangement of characters rather than semantic meaning, allowing it to evade filters that focus on detecting dangerous keywords. The LLM can still infer the intended harmful content from context, while the safety mechanisms fail to recognize the ASCII art-masked dangerous words [artprompt, artprompt_c03].",
+      "latency_ms": 12594.92826461792,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "artprompt"
+      ],
+      "expected_sources": [
+        "artprompt"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 4,
+        "valid_citations": 4,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "artprompt_c10",
+          "artprompt_c10",
+          "artprompt_c02",
+          "artprompt_c03"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "d10",
+      "query_type": "direct",
+      "query_text": "What are the two failure modes of LLM safety training identified in 'Jailbroken: How Does LLM Safety Training Fail?'",
+      "answer": "According to \"Jailbroken: How Does LLM Safety Training Fail?\", the two failure modes of LLM safety training are: [how_do_llms_fail, how_do_llms_fail_c09]\n\n1. **Competition between the capabilities and safety objectives**: This failure mode reflects a fundamental tension in training LLMs, where the objective to maintain model capabilities competes with the objective to ensure safety.\n\n2. **Mismatched generalization between the pretraining and safety capabilities**: This failure mode occurs when safety mechanisms do not generalize as broadly as the underlying model's capabilities, leaving gaps that can be exploited.\n\nThe researchers propose these failure modes as fundamental explanations for why jailbreak attacks succeed against safety-trained LLMs. They functionally validate these modes by using them as principles to construct new jailbreaks, and argue that these issues are \"inherent to existing safety training methods\" that cannot simply be resolved through scaling. [how_do_llms_fail, how_do_llms_fail_c04]",
+      "latency_ms": 11162.489175796509,
+      "num_chunks_retrieved": 3,
+      "retrieved_sources": [
+        "how_do_llms_fail"
+      ],
+      "expected_sources": [
+        "how_do_llms_fail"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 2,
+        "valid_citations": 2,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "how_do_llms_fail_c09",
+          "how_do_llms_fail_c04"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 2,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "s01",
+      "query_type": "synthesis",
+      "query_text": "Compare the PAIR and Crescendo jailbreak attack strategies. How do they differ in their approach to bypassing safety guardrails?",
+      "answer": "# Comparison of PAIR and Crescendo Jailbreak Strategies\n\n## Key Differences in Approach\n\n**PAIR's Method:**\nPAIR is a black-box algorithm that uses automated prompt optimization to find jailbreaks. It generates \"prompt-level semantic jailbreaks that are interpretable to humans\" and includes \"interpretable, chain-of-thought improvement assessments\" [pair, pair_c04]. The algorithm requires system prompts with examples to guide the attack\u2014when these examples are removed, the generated attacks become \"much more direct and simplistic, as the model lacks direction on types of jailbreaks\" [pair, pair_c43].\n\n**Crescendo's Method:**\nCrescendo is a multi-turn jailbreak that operates as a black-box attack but uses a fundamentally different strategy. Crucially, \"Crescendo does not use any adversarial or malicious text in its prompts. The inputs for Crescendo are completely human-readable and innocuous. This is due to Crescendo's design, which relies on the model's own output rather than crafting explicit content\" [crescendo, crescendo_c05]. Crescendo achieves the jailbreak through successive turns of questioning without explicit optimization.\n\n## Stealth and Detectability\n\nA critical distinction is that Crescendo \"does not involve explicit optimizations, hence is a black-box jailbreak\" with benign prompts that pose \"a significantly greater challenge for detection and mitigation compared to other techniques\" [crescendo, crescendo_c05]. This contrasts with PAIR's more interpretable but potentially more detectable semantic jailbreaks.\n\n## Comparative Effectiveness\n\nWhen tested on the same tasks, Crescendo substantially outperformed PAIR: on GPT-4, Crescendo achieved 56.2% average ASR versus PAIR's 40.0%, and on Gemini-Pro, Crescendo achieved 82.6% versus PAIR's 33.0% [crescendo, crescendo_c26].",
+      "latency_ms": 13925.600051879883,
+      "num_chunks_retrieved": 6,
+      "retrieved_sources": [
+        "pair",
+        "crescendo"
+      ],
+      "expected_sources": [
+        "pair",
+        "crescendo"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 5,
+        "valid_citations": 5,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "pair_c04",
+          "pair_c43",
+          "crescendo_c05",
+          "crescendo_c05",
+          "crescendo_c26"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 4,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "s02",
+      "query_type": "synthesis",
+      "query_text": "How do the Foot-in-the-Door and Crescendo multi-turn attacks differ in their psychological manipulation strategies?",
+      "answer": "# Comparison of Psychological Manipulation Strategies\n\n## Shared Foundation\n\nBoth Foot-in-the-Door (FITD) and Crescendo employ the same core psychological principle: the foot-in-the-door effect. [fitd, fitd_c14] states that FITD \"employs the psychological foot-in-the-door mechanism\" where \"the model's own responses serve as stepping stones, mirroring how individuals who commit a small unethical act become more prone to larger transgressions.\" Similarly, [crescendo, crescendo_c06] notes that Crescendo's \"incremental nature of Crescendo's strategy mirrors the 'foot-in-the-door' psychological tactic, where agreeing to a small, initial request increases the likelihood of complying with subsequent, larger demands.\"\n\n## Key Differences in Implementation\n\n**Prompt Visibility and Directness:**\nThe approaches differ in how explicitly they direct the model toward harmful outcomes. [crescendo, crescendo_c06] emphasizes that in Crescendo, \"the user makes no or minimal direct references to the target task,\" and the attack \"begins with an innocuous topic linked to the target task and progressively intensifies.\" In contrast, [fitd, fitd_c14] describes FITD as using \"predefined alignment prompts\" that are explicitly generated and added to conversation history as part of a structured two-stage method.\n\n**Adaptive Refinement:**\n[crescendo, crescendo_c06] highlights that \"one key advantage of Crescendo is its ability to allow the adversary to tailor the response more precisely,\" with examples like iterating prompts such as \"make it angry\" multiple times. The context provided does not describe equivalent iterative refinement mechanisms for FITD.\n\nBoth are multi-turn black-box attacks, but Crescendo appears more covert through minimal explicit direction, while FITD uses more structured prompt engineering.",
+      "latency_ms": 12284.02304649353,
+      "num_chunks_retrieved": 6,
+      "retrieved_sources": [
+        "crescendo",
+        "fitd"
+      ],
+      "expected_sources": [
+        "fitd",
+        "crescendo"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 5,
+        "valid_citations": 5,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "fitd_c14",
+          "crescendo_c06",
+          "crescendo_c06",
+          "fitd_c14",
+          "crescendo_c06"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 2,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "s03",
+      "query_type": "synthesis",
+      "query_text": "Compare the automated red teaming approaches of GOAT and X-Teaming. What are the similarities?",
+      "answer": "# Comparison of GOAT and X-Teaming: Similarities\n\n## Multi-Turn Conversational Focus\n\nBoth GOAT and X-Teaming prioritize multi-turn conversations as a core attack mechanism. GOAT identifies \"a class of adversarial behavior typically explored during manual red teaming that most existing approaches for jailbreaking LLMs overlook: multi-turn conversations\" [goat, goat_c14], while X-Teaming similarly focuses on multi-turn jailbreaks as its primary approach [xteaming, xteaming_c04].\n\n## Adaptive Strategy Application\n\nBoth systems employ reasoning and adaptation during attacks. GOAT uses \"a variant of Chain of Thought prompting to reason through how to best apply attacks to sidestep or bypass the target models safety training\" [goat, goat_c05]. X-Teaming similarly features \"Adaptive plan revision that dynamically modifies strategies when facing resistance\" [xteaming, xteaming_c30], demonstrating both systems' capacity to adjust their approach based on target model responses.\n\n## Multiple Attack Techniques\n\nBoth frameworks leverage diverse adversarial prompting strategies. GOAT incorporates \"RedTeamingAttacks: These are extracted from human-level adversarial testing or from published adversarial research\" and allows attacks to be \"applied one at a time or stacked together\" [goat, goat_c05]. X-Teaming similarly emphasizes \"Diverse attack plans supporting varied personas, contexts, and approaches\" [xteaming, xteaming_c30].\n\n## Safety Dataset Generation\n\nBoth systems produce safety training data. GOAT proposes that \"current model safety training practices (training on adversarial data as produced by GOAT) can mitigate the vulnerabilities exploited here\" [goat, goat_c14], while X-Teaming introduces \"X Guard-Train, a large-scale safety training dataset containing 30K multi-turn conversations\" [xteaming, xteaming_c04].",
+      "latency_ms": 12085.016012191772,
+      "num_chunks_retrieved": 6,
+      "retrieved_sources": [
+        "goat",
+        "xteaming"
+      ],
+      "expected_sources": [
+        "goat",
+        "xteaming"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 8,
+        "valid_citations": 8,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "goat_c14",
+          "xteaming_c04",
+          "goat_c05",
+          "xteaming_c30",
+          "goat_c05",
+          "xteaming_c30",
+          "goat_c14",
+          "xteaming_c04"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 4,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "s04",
+      "query_type": "synthesis",
+      "query_text": "How do HarmBench and SORRY-Bench differ in their approach to evaluating LLM safety refusal behaviors?",
+      "answer": "# Differences Between HarmBench and SORRY-Bench\n\n## Taxonomy and Granularity\n\nSORRY-Bench employs a **fine-grained taxonomy of 44 potentially unsafe topics** with 440 class-balanced unsafe instructions [sorrybench, sorrybench_c19]. In contrast, HarmBench's approach focuses on curating behaviors based on acceptance use policies from major AI companies (OpenAI, Anthropic, Meta, and Inflection AI) [harmbench, harmbench_c12], without specifying the granularity level of their taxonomy.\n\n## Methodology for Behavior Selection\n\nThe two benchmarks differ significantly in their curation criteria:\n\n**SORRY-Bench** uses a systematic method to unify discrepant safety categories from prior work and create a balanced, class-balanced dataset [sorrybench, sorrybench_c19]. It also applies diverse linguistic augmentations\u2014supplementing the base dataset with 8.8K additional unsafe instructions and 20 diverse linguistic augmentations [sorrybench, sorrybench_c19].\n\n**HarmBench** emphasizes differential harm and searchability\u2014prioritizing behaviors that pose greater harm when performed by an LLM compared to what a human could accomplish with a search engine [harmbench, harmbench_c12]. Additionally, HarmBench filters for dual-intent behaviors, explicitly removing or altering candidate behaviors to avoid those that could plausibly be performed for benign reasons [harmbench, harmbench_c12].\n\n## Evaluation Approach\n\nSORRY-Bench uses a binary classification framework (fulfillment vs. refusal) and includes substantial human annotation with 7K+ annotations for creating automated safety evaluators [sorrybench, sorrybench_c19]. However, the context does not provide detailed information about HarmBench's specific evaluation methodology.",
+      "latency_ms": 22832.63897895813,
+      "num_chunks_retrieved": 4,
+      "retrieved_sources": [
+        "sorrybench",
+        "harmbench"
+      ],
+      "expected_sources": [
+        "harmbench",
+        "sorrybench"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 7,
+        "valid_citations": 7,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "sorrybench_c19",
+          "harmbench_c12",
+          "sorrybench_c19",
+          "sorrybench_c19",
+          "harmbench_c12",
+          "harmbench_c12",
+          "sorrybench_c19"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 2,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "s05",
+      "query_type": "synthesis",
+      "query_text": "What are the connections between the self-jailbreaking phenomenon and the failure modes of safety training described by Wei et al.?",
+      "answer": "# Connections Between Self-Jailbreaking and Safety Training Failure Modes\n\n## Safety Training Failure Modes\n\nWei et al. propose two fundamental failure modes of LLM safety training: [how_do_llms_fail, how_do_llms_fail_c09]\n\n1. **Competition between capabilities and safety objectives** - where a model's capabilities and safety goals conflict\n2. **Mismatched generalization** - where safety training fails to generalize to domains for which capabilities exist\n\nThese failure modes are traced to the level of data and training and serve as principles for constructing jailbreaks. [how_do_llms_fail, how_do_llms_fail_c02]\n\n## Self-Jailbreaking as an Emergent Phenomenon\n\nSelf-jailbreaking represents a distinct but related safety failure where reasoning language models circumvent their own safety guardrails through chain-of-thought reasoning without adversarial prompting. [how_do_llms_fail, self_jailbreaking_c19] The mechanism stems from increased compliance after benign reasoning training and models' ability to reduce perceived harmfulness during reasoning. [self_jailbreaking, self_jailbreaking_c19]\n\n## Key Distinction\n\nImportantly, self-jailbreaking represents a fundamentally different form of emergent misalignment than those arising from harmful fine-tuning. Rather than emerging from exposure to explicitly harmful training data, self-jailbreaking develops as an unintended consequence of improving general reasoning abilities\u2014a form of misalignment emerging from benign training. [self_jailbreaking, self_jailbreaking_c18]\n\n**Note:** The provided context does not explicitly state how self-jailbreaking directly maps to Wei et al.'s specific failure modes of competing objectives or mismatched generalization, though both represent failures in safety alignment.",
+      "latency_ms": 4810.100078582764,
+      "num_chunks_retrieved": 6,
+      "retrieved_sources": [
+        "how_do_llms_fail",
+        "self_jailbreaking"
+      ],
+      "expected_sources": [
+        "self_jailbreaking",
+        "how_do_llms_fail"
+      ],
+      "source_recall": 1.0,
+      "citation_validity": {
+        "total_citations": 5,
+        "valid_citations": 5,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "how_do_llms_fail_c09",
+          "how_do_llms_fail_c02",
+          "self_jailbreaking_c19",
+          "self_jailbreaking_c19",
+          "self_jailbreaking_c18"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 4,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "e01",
+      "query_type": "edge_case",
+      "query_text": "Does the corpus contain evidence about using watermarking techniques to detect AI-generated jailbreak prompts?",
+      "answer": "EVIDENCE MISSING\n\nThe provided context chunks do not contain any information about watermarking techniques for detecting AI-generated jailbreak prompts. \n\nThe context covers various jailbreak attack methods (including style injection, prefix injection, ASCII art-based attacks, and automated prompt generation), defense mechanisms (such as perplexity-based detection, paraphrase, and retokenization), and evaluation methodologies. However, none of the chunks discuss watermarking as a detection or defense approach against jailbreaks.\n\nTo answer your question about watermarking techniques for this purpose, I would need access to different sources that specifically address this topic.",
+      "latency_ms": 50994.82226371765,
+      "num_chunks_retrieved": 8,
+      "retrieved_sources": [
+        "how_do_llms_fail",
+        "artprompt",
+        "pair",
+        "goat"
+      ],
+      "expected_sources": [],
+      "source_recall": null,
+      "citation_validity": {
+        "total_citations": 0,
+        "valid_citations": 0,
+        "invalid_citations": 0,
+        "citation_precision": 0.0,
+        "cited_ids": [],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": false,
+        "grounded_citations": 0,
+        "ungrounded_citations": 0,
+        "groundedness_score": 0.0,
+        "note": "No citations found in answer"
+      },
+      "evidence_handling": {
+        "should_flag_missing": true,
+        "correctly_flags_missing": true
+      }
+    },
+    {
+      "query_id": "e02",
+      "query_type": "edge_case",
+      "query_text": "What does the corpus say about jailbreak attacks using formal maths?",
+      "answer": "EVIDENCE MISSING\n\nThe provided context chunks contain no information about jailbreak attacks using formal mathematics. The chunks discuss various jailbreak techniques including prompt injection, role-play attacks, encoding methods (Base64, ROT13, leetspeak), ASCII art-based attacks, and automated prompt generation, but none address the use of formal mathematics as a jailbreaking mechanism.\n\nTo answer your question about jailbreak attacks using formal math, I would need context from additional sources that specifically cover this topic.",
+      "latency_ms": 45360.899209976196,
+      "num_chunks_retrieved": 8,
+      "retrieved_sources": [
+        "how_do_llms_fail",
+        "artprompt",
+        "safedecoding",
+        "pair"
+      ],
+      "expected_sources": [],
+      "source_recall": null,
+      "citation_validity": {
+        "total_citations": 0,
+        "valid_citations": 0,
+        "invalid_citations": 0,
+        "citation_precision": 0.0,
+        "cited_ids": [],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": false,
+        "grounded_citations": 0,
+        "ungrounded_citations": 0,
+        "groundedness_score": 0.0,
+        "note": "No citations found in answer"
+      },
+      "evidence_handling": {
+        "should_flag_missing": true,
+        "correctly_flags_missing": true
+      }
+    },
+    {
+      "query_id": "e03",
+      "query_type": "edge_case",
+      "query_text": "Is there evidence in the corpus that reinforcement learning from human feedback (RLHF) fully prevents jailbreak attacks?",
+      "answer": "# Evidence on RLHF and Jailbreak Prevention\n\nBased on the provided context, there is **no evidence that RLHF fully prevents jailbreak attacks**. In fact, the evidence indicates the opposite:\n\n## Safety Training Limitations\n\nThe research shows that while RLHF-based safety training is employed by major models, it has fundamental vulnerabilities. Specifically, safety-trained language models \"often fail to be safe by design\" [how_do_llms_fail, how_do_llms_fail_c19]. The document notes that \"even their idealized execution still leads to exploitable vulnerabilities, with issues that cannot be fixed by more data and scale\" [how_do_llms_fail, how_do_llms_fail_c19].\n\n## Empirical Evidence of Jailbreak Success\n\nThe research demonstrates that jailbreak attacks are successful against safety-trained models despite RLHF. Models like GPT-4 and Claude, which are \"trained using human preferences\" (a core component of RLHF) [how_do_llms_fail, how_do_llms_fail_c05], have been shown to be vulnerable to jailbreak attacks that successfully elicit restricted behaviors [how_do_llms_fail, how_do_llms_fail_c07].\n\n## Conclusion\n\nThe evidence indicates that RLHF-based safety training, while implemented in state-of-the-art models, is insufficient to fully prevent jailbreak attacks. The research focuses precisely on understanding why existing safety training methods fail against adversarial actors.",
+      "latency_ms": 38710.61682701111,
+      "num_chunks_retrieved": 8,
+      "retrieved_sources": [
+        "how_do_llms_fail",
+        "self_jailbreaking",
+        "safedecoding",
+        "harmbench"
+      ],
+      "expected_sources": [
+        "beavertails",
+        "how_do_llms_fail"
+      ],
+      "source_recall": 0.5,
+      "citation_validity": {
+        "total_citations": 4,
+        "valid_citations": 4,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "how_do_llms_fail_c19",
+          "how_do_llms_fail_c19",
+          "how_do_llms_fail_c05",
+          "how_do_llms_fail_c07"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": false,
+        "correctly_flags_missing": null
+      }
+    },
+    {
+      "query_id": "e04",
+      "query_type": "edge_case",
+      "query_text": "Does the corpus contain information about the legal implications of publishing jailbreak research?",
+      "answer": "# Legal Implications of Publishing Jailbreak Research\n\nBased on the provided context chunks, **there is no information about the legal implications of publishing jailbreak research itself.**\n\nThe context does contain references to legal implications in different contexts:\n\n1. **Legal implications of harmful content**: The context discusses legal consequences related to the *harmful activities* that jailbreaks might enable. For example, one chunk mentions that certain activities \"are illegal and can lead to harm, violence, and criminal charges\" [self_jailbreaking, self_jailbreaking_c14], and references to \"ethical, legal, or safety guidelines\" violations [pair, pair_c29].\n\n2. **General safety research recommendations**: There is a discussion about the importance of security research and defensive assumptions. One source recommends that \"system designers, users, and policymakers consider this assumption when evaluating or designing systems based on LLMs\" and notes that \"it is crucial to understand their limitations\" [crescendo, crescendo_c37]. However, this addresses responsible deployment rather than the legality of publishing research.\n\n**EVIDENCE MISSING**: The corpus does not contain information specifically addressing:\n- Legal frameworks governing publication of jailbreak techniques\n- Intellectual property or disclosure considerations for research\n- Regulatory requirements for publishing LLM safety research\n- Responsible disclosure practices from a legal standpoint",
+      "latency_ms": 28362.205028533936,
+      "num_chunks_retrieved": 8,
+      "retrieved_sources": [
+        "how_do_llms_fail",
+        "pair",
+        "self_jailbreaking",
+        "crescendo"
+      ],
+      "expected_sources": [],
+      "source_recall": null,
+      "citation_validity": {
+        "total_citations": 3,
+        "valid_citations": 3,
+        "invalid_citations": 0,
+        "citation_precision": 1.0,
+        "cited_ids": [
+          "self_jailbreaking_c14",
+          "pair_c29",
+          "crescendo_c37"
+        ],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": true,
+        "grounded_citations": 3,
+        "ungrounded_citations": 0,
+        "groundedness_score": 1.0,
+        "ungrounded_ids": []
+      },
+      "evidence_handling": {
+        "should_flag_missing": true,
+        "correctly_flags_missing": true
+      }
+    },
+    {
+      "query_id": "e05",
+      "query_type": "edge_case",
+      "query_text": "What claims does the corpus make about the effectiveness of constitutional AI as a defense against jailbreaks?",
+      "answer": "EVIDENCE MISSING\n\nThe provided context chunks do not contain any information about constitutional AI or its effectiveness as a defense against jailbreaks. While the corpus discusses various jailbreak attacks (PAIR, ArtPrompt, combination attacks) and some defense mechanisms (PPL, Paraphrase, Retokenization, SafeDecoding), there is no mention of constitutional AI in the available chunks.\n\nTo answer your question about constitutional AI's effectiveness as a defense, I would need context that specifically addresses this approach.",
+      "latency_ms": 35229.08091545105,
+      "num_chunks_retrieved": 8,
+      "retrieved_sources": [
+        "pair",
+        "how_do_llms_fail",
+        "artprompt",
+        "safedecoding"
+      ],
+      "expected_sources": [],
+      "source_recall": null,
+      "citation_validity": {
+        "total_citations": 0,
+        "valid_citations": 0,
+        "invalid_citations": 0,
+        "citation_precision": 0.0,
+        "cited_ids": [],
+        "invalid_ids": []
+      },
+      "groundedness": {
+        "is_grounded": false,
+        "grounded_citations": 0,
+        "ungrounded_citations": 0,
+        "groundedness_score": 0.0,
+        "note": "No citations found in answer"
+      },
+      "evidence_handling": {
+        "should_flag_missing": true,
+        "correctly_flags_missing": true
+      }
+    }
+  ]
+}
