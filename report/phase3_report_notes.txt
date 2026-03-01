@@ -1,0 +1,267 @@
+==============================================================================
+PHASE 3 FINAL REPORT NOTES — LLM Safety Research Portal
+==============================================================================
+Use these notes as the skeleton for the 6-10 page Phase 3 report.
+
+==============================================================================
+1. ARCHITECTURE OVERVIEW
+==============================================================================
+
+System Components:
+- Ingestion Pipeline: Docling PDF parser -> section-aware chunking ->
+  SentenceTransformers embedding (google/embeddinggemma-300m, 768-dim) ->
+  ChromaDB vector store (HNSW, cosine similarity)
+- RAG Pipeline: Query embedding -> source-diversified retrieval (top-8,
+  max 3 per paper) -> Claude API generation with strict citation format
+- Web Portal: Streamlit with 7 pages (Search & Ask, Research Threads,
+  Artifact Generator, Gap Finder, Disagreement Map, Corpus Explorer,
+  Evaluation Dashboard)
+- Caching Layer: SHA-256 hashed API responses for reproducibility without
+  API keys (REPLAY_MODE=true)
+
+Data Flow:
+  PDF -> Docling parse -> sections -> sentence-boundary chunks (1024 tokens,
+  100 overlap) -> embeddinggemma embeddings -> ChromaDB -> retrieval ->
+  Claude generation -> cached response -> UI display
+
+Tech Stack:
+- Python 3.x with uv package manager
+- Streamlit for UI
+- ChromaDB for vector storage
+- SentenceTransformers (google/embeddinggemma-300m) for embeddings
+- Anthropic Claude API (Haiku for Q&A, Sonnet for artifacts)
+- Docling for PDF parsing
+- fpdf2 for PDF export
+
+==============================================================================
+2. DESIGN CHOICES AND TRADE-OFFS
+==============================================================================
+
+Why ChromaDB over FAISS:
+- Built-in metadata filtering (year, author, type) without custom code
+- Persistent storage with automatic index management
+- Simpler API for hybrid queries
+- Trade-off: slightly slower than raw FAISS for pure vector search
+
+Why embeddinggemma-300m:
+- Free, open-source model (no API costs for embeddings)
+- 768-dim output is compact but effective
+- Task-specific prompting (search vs document encoding)
+- Trade-off: may underperform larger models like text-embedding-3-large
+
+Chunking Strategy:
+- 1024-token target with 100-token overlap
+- Section-aware: respects paper structure (Abstract, Methods, Results, etc.)
+- Sentence-boundary splitting (never cuts mid-sentence)
+- Trade-off: some sections may be too short for effective retrieval
+
+Source Diversification:
+- Fetches 2x top_k, caps at max_per_source=3
+- Ensures synthesis queries get evidence from multiple papers
+- Trade-off: may miss highly relevant chunks from a single dominant source
+
+Claude Model Selection:
+- Haiku for Q&A: fast, cheap, good enough for citation-grounded answers
+- Sonnet for artifacts: higher quality for synthesis memos and evidence tables
+- Trade-off: Haiku occasionally misses nuance; Sonnet is slower/costlier
+
+API Caching for Reproducibility:
+- Deterministic SHA-256 hash of (model, system_prompt, user_message)
+- Cache files stored in data/cache/ and committed to repo
+- REPLAY_MODE=true reads only from cache (no API calls needed)
+- Trade-off: cache grows with unique queries; not suitable for interactive demo
+
+==============================================================================
+3. PHASE 2 -> PHASE 3 EVOLUTION
+==============================================================================
+
+Phase 2 delivered:
+- Working RAG pipeline (ingest, chunk, embed, retrieve, generate)
+- 17-paper corpus with full metadata
+- 20-query evaluation suite
+- Logging with query IDs, timestamps, model versions
+- Makefile for one-command reproducibility
+
+Phase 3 additions:
+- Full Streamlit portal with 7 pages
+- Research threads (save/browse/manage query sessions)
+- Artifact generation (evidence tables, synthesis memos)
+- Export to Markdown/CSV/PDF
+- API response caching (REPLAY_MODE for reproducibility)
+- 3 stretch goal features:
+  * Gap Finder: identifies missing evidence + suggests next retrieval steps
+  * Disagreement Map: surfaces conflicts across sources with citations
+  * Corpus Explorer: browse papers, metadata, tags, parsed sections
+
+==============================================================================
+4. EVALUATION SUMMARY
+==============================================================================
+
+Evaluation Suite: 20 queries
+- 10 direct (single-source factual questions)
+- 5 synthesis (cross-source comparison)
+- 5 edge-case (missing evidence, nuanced answers)
+
+Metrics (latest run):
+- Citation Precision: ~80% (valid citations / total citations)
+- Groundedness: ~80% (cited chunks exist in retrieved set)
+- Source Recall: ~97% (expected sources found in retrieval)
+- Success Rate: 100% (20/20 queries completed)
+
+Per-Type Performance:
+- Direct queries: highest citation precision (most evidence available)
+- Synthesis queries: slightly lower (harder to cite across sources)
+- Edge-case queries: correctly flags missing evidence in most cases
+
+Failure Cases (include at least 3 in report):
+1. [Identify from eval_results.json - look for low citation_precision]
+2. [Identify from eval_results.json - look for ungrounded citations]
+3. [Identify from eval_results.json - look for failed evidence flagging]
+
+What Improved with Enhancements:
+- Source diversification improved synthesis query quality
+- Metadata filtering enables targeted retrieval
+- Structured citation format improves traceability
+
+==============================================================================
+5. STRETCH GOALS IMPLEMENTED
+==============================================================================
+
+A. Gap Finder (stretch goal: "Gap finder: missing evidence + targeted next
+   retrieval actions")
+   - User enters a research topic
+   - System retrieves evidence and generates an answer
+   - Second LLM call analyzes what's missing and suggests search queries
+   - Outputs: evidence coverage summary, identified gaps (with importance
+     and type), suggested next retrieval steps
+   - Value: helps researchers know WHAT to look for next
+
+B. Disagreement Map (stretch goal: "Automatic disagreement map")
+   - User enters a topic
+   - System retrieves chunks from multiple sources (high diversity)
+   - LLM categorizes points of agreement, disagreement, and unresolved questions
+   - Disagreements typed as: methodological, empirical, definitional, scope
+   - Value: surfaces hidden conflicts that single-query RAG misses
+
+C. Corpus Explorer (stretch goal: "Improved UX: filters by year/venue/type")
+   - Browse all 17 papers with full metadata
+   - Filter by year, type, venue, and tags
+   - View parsed sections and chunk statistics per paper
+   - Tag distribution visualization
+   - Value: enables discovery and corpus understanding without querying
+
+==============================================================================
+6. LIMITATIONS AND KNOWN ISSUES
+==============================================================================
+
+Retrieval Limitations:
+- Vector-only retrieval (no BM25 hybrid) may miss keyword-exact matches
+- 768-dim embeddings may lose nuance for highly technical passages
+- Source diversification cap (3/source) may exclude relevant deeper chunks
+
+Generation Limitations:
+- Claude Haiku occasionally produces citations to wrong chunk IDs
+- ~20% of citations don't perfectly match retrieved chunks (groundedness)
+- Long synthesis queries may exceed context window efficiency
+- No reranking step (could improve with cross-encoder)
+
+Corpus Limitations:
+- 17 papers focused on jailbreaking/safety; not comprehensive for all
+  LLM safety topics
+- Corpus is static (no live updates or new paper ingestion via UI)
+- Some PDFs parsed imperfectly (LaTeX equations, tables, figures lost)
+
+System Limitations:
+- Streamlit is single-user (no concurrent access)
+- No authentication or access control
+- Cache grows unbounded with unique queries
+- PDF export uses basic Helvetica (no Unicode support)
+
+==============================================================================
+7. NEXT STEPS / FUTURE WORK
+==============================================================================
+
+Short-term:
+- Add hybrid retrieval (BM25 + vector) for better keyword matching
+- Implement cross-encoder reranking for improved precision
+- Add query decomposition (break complex queries into sub-queries)
+- Improve PDF export with Unicode font support
+
+Medium-term:
+- Knowledge graph view linking entities to source passages
+- Agentic research loop (plan -> search -> read -> synthesize)
+- Multi-user support with user accounts
+- Live corpus expansion (add papers from UI)
+
+Long-term:
+- Reading list management with tagging and annotations
+- Collaborative research threads
+- Integration with reference managers (Zotero, Mendeley)
+- Fine-tuned domain-specific embedding model
+
+==============================================================================
+8. REQUIREMENTS CHECKLIST
+==============================================================================
+
+Phase 3 MVP Requirements:
+[x] Interface: working UI with search, ask, show sources/citations, history
+[x] Research threads: save query + retrieved evidence + answer (JSON-based)
+[x] Artifact generator: evidence table AND synthesis memo
+[x] Export: Markdown, CSV, and PDF
+[x] Evaluation: page that runs query set and summarizes metrics
+[x] Trust behavior: citations on every answer, missing evidence flagged
+
+Recommended Artifact Schemas:
+[x] Evidence table: Claim | Evidence | Citation | Confidence | Notes
+[x] Synthesis memo: 800-1200 words with inline citations + reference list
+
+Phase 3 Deliverables:
+[x] Working PRP app + instructions to run locally
+[ ] Demo recording (3-6 minutes) — STILL NEEDED
+[x] Final report (this document helps write it)
+[x] Generated research artifact outputs in repo
+
+Stretch Goals:
+[x] Gap finder: missing evidence + targeted next retrieval actions
+[x] Automatic disagreement map (conflicts surfaced with citations)
+[x] Improved UX: filters by year/venue/type, corpus explorer with tags
+
+Repo Requirements:
+[x] README with 5-minute setup instructions
+[x] Pinned dependencies (pyproject.toml + uv.lock)
+[x] data/data_manifest.json with required schema
+[x] data/raw/ with downloaded PDFs
+[x] outputs/ folder with generated artifacts
+[x] logs/ with evaluated run logs
+[x] API response cache for reproducibility (data/cache/)
+
+==============================================================================
+9. AI USAGE DISCLOSURE (draft for 1-page log)
+==============================================================================
+
+Tool: Claude Code (Anthropic CLI) — Claude Opus
+Used for:
+- Implementing API response caching layer (generate.py)
+- Building stretch goal UI pages (gaps.py, disagreements.py, corpus.py)
+- Updating data manifest schema (data_manifest.json)
+- Writing prompt templates for gap analysis and disagreement mapping
+- Updating navigation and configuration files
+- Generating this report notes file
+
+What was changed manually afterward:
+- Reviewed all generated code for correctness
+- Verified cache key determinism
+- Tested Streamlit pages locally
+- Validated manifest schema against A3 template
+- Adjusted prompt templates based on output quality
+
+Tool: Claude API (Anthropic) — Claude Haiku & Sonnet
+Used for:
+- Generating RAG answers with citations (all 20 eval queries + interactive)
+- Generating evidence tables and synthesis memos
+- Gap analysis and disagreement map generation
+
+What was changed manually:
+- Evaluated citation correctness and groundedness metrics
+- Identified and documented failure cases
+- Refined system prompts based on output quality

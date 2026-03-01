@@ -1,0 +1,8 @@
+{
+  "model": "claude-haiku-4-5",
+  "system_prompt_hash": "7c1ee11d93629999",
+  "user_message_hash": "bef09938e4326664",
+  "max_tokens": 2048,
+  "response": "EVIDENCE MISSING\n\nThe provided context chunks do not contain any information about watermarking techniques to detect AI-generated jailbreak prompts. \n\nThe context covers various jailbreak attack methods (including style injection, prefix injection, ASCII art-based attacks, and automated approaches like PAIR and GOAT) and some defense mechanisms (such as perplexity-based detection, paraphrase, and retokenization). However, none of the chunks discuss watermarking as a detection or defense technique against jailbreaks.\n\nTo answer your question about watermarking-based approaches, evidence from additional sources would be needed.",
+  "timestamp": "2026-03-01T19:50:55.956330+00:00"
+}

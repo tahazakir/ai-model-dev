@@ -18,7 +18,18 @@ st.set_page_config(
 search_page = st.Page("pages/search.py", title="Search & Ask")
 threads_page = st.Page("pages/threads.py", title="Research Threads")
 artifacts_page = st.Page("pages/artifacts.py", title="Artifact Generator")
+gaps_page = st.Page("pages/gaps.py", title="Gap Finder")
+disagreements_page = st.Page("pages/disagreements.py", title="Disagreement Map")
+corpus_page = st.Page("pages/corpus.py", title="Corpus Explorer")
 evaluation_page = st.Page("pages/evaluation.py", title="Evaluation")
 
-pg = st.navigation([search_page, threads_page, artifacts_page, evaluation_page])
+pg = st.navigation([
+    search_page,
+    threads_page,
+    artifacts_page,
+    gaps_page,
+    disagreements_page,
+    corpus_page,
+    evaluation_page,
+])
 pg.run()

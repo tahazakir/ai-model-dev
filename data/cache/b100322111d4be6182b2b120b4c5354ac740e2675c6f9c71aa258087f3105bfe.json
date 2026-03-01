@@ -1,0 +1,8 @@
+{
+  "model": "claude-haiku-4-5",
+  "system_prompt_hash": "7c1ee11d93629999",
+  "user_message_hash": "c1c9629625c1d582",
+  "max_tokens": 2048,
+  "response": "According to \"Jailbroken: How Does LLM Safety Training Fail?\", the two failure modes of LLM safety training are [how_do_llms_fail, how_do_llms_fail_c09]:\n\n1. **Competition between the capabilities and safety objectives** - This refers to conflicts between training objectives where enhancing model capabilities can undermine safety constraints.\n\n2. **Mismatched generalization between the pretraining and safety capabilities** - This occurs when safety training fails to generalize across the same domains and contexts where the model's pretraining capabilities apply.\n\nThe paper validates these failure modes by using them as principles to construct new jailbreaks, and notes that these fundamental issues mean that scaling up alone will not resolve them, as \"the issue lies with the optimization objective\" [how_do_llms_fail, how_do_llms_fail_c04].",
+  "timestamp": "2026-03-01T19:48:59.353696+00:00"
+}

@@ -14,10 +14,14 @@ RAW_PDF_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 VECTOR_STORE_DIR = DATA_DIR / "vector_store"
 MANIFEST_PATH = DATA_DIR / "data_manifest.json"
+CACHE_DIR = DATA_DIR / "cache"
 LOGS_DIR = ROOT_DIR / "logs"
 OUTPUTS_DIR = ROOT_DIR / "outputs"
 THREADS_DIR = OUTPUTS_DIR / "threads"
 EVAL_DIR = Path(__file__).resolve().parent / "eval"
+
+# ── Replay mode (reproducibility without API keys) ───────────────────
+REPLAY_MODE = os.getenv("REPLAY_MODE", "false").lower() == "true"
 
 # ── Embedding ──────────────────────────────────────────────────────────
 EMBEDDING_MODEL = "google/embeddinggemma-300m"

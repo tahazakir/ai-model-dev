@@ -1,0 +1,29 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Environment
+.env
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+
+# Project-specific
+notes.txt
+data/vector_store/
+aimd_slides/
+PRP_video_demo_mzakir.mp4
+
+.*
+
+CLAUDE.md
+exam

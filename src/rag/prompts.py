@@ -62,6 +62,66 @@ Source metadata (for the reference list):
 Topic: {topic}"""
 
 
+GAP_ANALYSIS_PROMPT = """\
+You have been given a research topic, retrieved evidence chunks, and a generated answer.
+Analyze the evidence and identify gaps. Produce a structured gap analysis:
+
+## Evidence Coverage Summary
+Briefly summarize what the corpus DOES cover on this topic (2-3 sentences).
+
+## Identified Gaps
+For each gap, provide:
+- **Gap description**: What evidence is missing or insufficient
+- **Importance**: HIGH / MEDIUM / LOW
+- **Type**: methodological | empirical | theoretical | comparative
+- **Current evidence**: What partial evidence exists (cite chunks if applicable)
+
+## Suggested Next Retrieval Steps
+For each gap, suggest:
+- Specific search queries to find the missing evidence
+- Types of sources that would fill the gap (e.g., "empirical study comparing X and Y")
+
+Evidence chunks:
+{chunks}
+
+Current answer:
+{answer}
+
+Topic: {topic}"""
+
+DISAGREEMENT_MAP_PROMPT = """\
+Analyze the following research evidence chunks and identify points of agreement
+and disagreement across different sources on the given topic.
+
+Produce a structured disagreement map:
+
+## Points of Agreement
+List claims where multiple sources converge. For each:
+- **Claim**: The shared finding
+- **Supporting sources**: Citations [source_id, chunk_id] from each source
+- **Strength**: STRONG (3+ sources) / MODERATE (2 sources) / WEAK (implied)
+
+## Points of Disagreement
+List claims where sources conflict or diverge. For each:
+- **Topic**: The disputed area
+- **Position A**: Source position with citation [source_id, chunk_id]
+- **Position B**: Opposing/different position with citation [source_id, chunk_id]
+- **Type**: methodological | empirical | definitional | scope
+- **Notes**: Context for why the disagreement exists
+
+## Unresolved Questions
+Topics where the evidence is too sparse to determine agreement or disagreement.
+
+Format disagreements as a markdown table:
+| Topic | Position A | Position B | Type | Sources |
+|-------|-----------|-----------|------|---------|
+
+Evidence chunks:
+{chunks}
+
+Topic: {topic}"""
+
+
 def format_chunk_for_prompt(chunk_id: str, source_id: str, title: str, text: str) -> str:
     """Format a single chunk for inclusion in the prompt."""
     return f"[{source_id}, {chunk_id}] (from: {title})\n{text}"

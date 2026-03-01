@@ -1,0 +1,8 @@
+{
+  "model": "claude-haiku-4-5",
+  "system_prompt_hash": "7c1ee11d93629999",
+  "user_message_hash": "f97a52c35320c51f",
+  "max_tokens": 2048,
+  "response": "# Aegis 2.0 Safety Risk Taxonomy Categories\n\nThe Aegis 2.0 taxonomy defines a comprehensive risk classification system organized into multiple tiers [aegis2, aegis2_c08]:\n\n## Core and Fine-Grained Categories\n\nThe taxonomy comprises **12 core categories and 9 additional fine-grained risks** [aegis2, aegis2_c08]. According to Table 2, the core categories include [aegis2, aegis2_c09]:\n\n- Hate/Identity\n- Suicide and Self Harm\n- Guns/Illegal Weapons\n- PII/Privacy\n- Criminal Planning/Confessions\n- Controlled/Regulated Substances\n- Other\n\nThe fine-grained categories include [aegis2, aegis2_c09]:\n\n- Sexual Violence\n- Threat\n- Sexual\n- Minor\n- Harassment\n- Profanity\n- Illegal Activity\n- Immoral/Unethical\n- Unauthorized Advice\n- Political/Misinformation/Conspiracy\n- Fraud/Deception\n- Copyright/Trademark/Plagiarism\n- High Risk Gov. Decision Making\n- Malware\n- Manipulation\n\n## Special Classification Labels\n\nIn addition to unsafe categories, the taxonomy includes [aegis2, aegis2_c09]:\n\n- **Safe**: for content that does not violate any risk category\n- **Needs Caution**: for ambiguous instances where there is insufficient context to determine safety\n- **Other**: an extensible category for unsafe content not captured by predefined categories, which allows for free-text annotations to discover emerging risks [aegis2, aegis2_c29]\n\nThe taxonomy allows samples to be assigned to multiple risk categories simultaneously for comprehensive risk representation [aegis2, aegis2_c08].",
+  "timestamp": "2026-03-01T19:48:10.015464+00:00"
+}

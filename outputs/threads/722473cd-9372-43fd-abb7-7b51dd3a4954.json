@@ -1,0 +1,41 @@
+{
+  "thread_id": "722473cd-9372-43fd-abb7-7b51dd3a4954",
+  "title": "How does the Crescendo attack work?",
+  "created_at": "2026-03-01T15:47:42.298972",
+  "updated_at": "2026-03-01T15:47:42.299011",
+  "entries": [
+    {
+      "query_text": "How does the Crescendo attack work?",
+      "answer": "# How the Crescendo Attack Works\n\n## Core Mechanism\n\nCrescendo is a multi-turn jailbreaking technique that operates through a gradual escalation strategy. [crescendo, crescendo_c06] It begins with an innocuous topic linked to the target task and progressively intensifies, directing the model's responses towards the intended outcome. Rather than making direct references to the harmful objective, the adversary uses primarily benign, human-readable prompts that the model responds to iteratively.\n\n## Key Operational Features\n\n**Psychological Foundation**: The attack mirrors the 'foot-in-the-door' psychological tactic, where agreeing to a small, initial request increases the likelihood of complying with subsequent, larger demands. [crescendo, crescendo_c06]\n\n**Exploitation of Model Outputs**: A distinguishing feature of Crescendo is that it uses the target model's own outputs to direct the model towards bypassing its safety alignment. [crescendo, crescendo_c06] This allows adversaries to tailor responses more precisely\u2014for example, by iteratively using prompts like \"make it angry\" until the output meets their expectations. [crescendo, crescendo_c06]\n\n**Black-Box Approach**: Crescendo requires no assumptions about the target model's architecture or internal workings. [crescendo, crescendo_c07] It operates entirely through normal API interactions, requiring only access to a black-box API to interact with the target LLM. [crescendo, crescendo_c07]\n\n## Effectiveness\n\nCrescendo does not require the adversary to explicitly specify the harmful task upfront. [crescendo, crescendo_c38] Experiments have shown that Crescendo surpasses other state-of-the-art jailbreak techniques across different LLMs. [crescendo, crescendo_c38]",
+      "retrieved_chunks": [
+        {
+          "chunk_id": "crescendo_c06",
+          "source_id": "crescendo",
+          "title": "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack",
+          "section_title": "3 Crescendo",
+          "text": "Crescendo is a multi-turn jailbreaking technique that uses benign human readable prompts. Crescendo distinguishes itself from other approaches by utilizing the target model's outputs to direct the model towards bypassing its safety alignment. This approach begins with an innocuous topic linked to the target task and progressively intensifies, directing the model's responses towards the intended outcome. Hence, it circumvents defenses and safety measures, especially ones designed to react mainly to the user's prompts. The incremental nature of Crescendo's strategy mirrors the 'foot-in-the-door' psychological tactic, where agreeing to a small, initial request increases the likelihood of complying with subsequent, larger demands. Crescendo intuitively starts with a question that can serve as a foundation for achieving the objective. To illustrate, Figure 2 present an example general pattern that successfully generates articles promoting misinformation. In this example X represents the type of misinformation, i.e., the abstract topic of the jailbreak task. As Figure 2 show, the user makes no or minimal direct references to the target task. As illustrated in Figure 2, one key advantage of Crescendo is its ability to allow the adversary to tailor the response more precisely. For example, the adversary may choose to iterate the prompt 'make it angry' multiple times until the output meets their expectations.",
+          "distance": 0.3762965798377991
+        },
+        {
+          "chunk_id": "crescendo_c07",
+          "source_id": "crescendo",
+          "title": "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack",
+          "section_title": "3.1 Threat Model",
+          "text": "Crescendo is a completely black-box jailbreak that makes no assumptions about the target model. It is executed through entirely normal interactions with an LLM, similar to most other jailbreaks. For automating Crescendo, access to a blackbox API is the only requirement needed to interact with the target LLM.",
+          "distance": 0.398013710975647
+        },
+        {
+          "chunk_id": "crescendo_c38",
+          "source_id": "crescendo",
+          "title": "Great, Now Write an Article About That: The Crescendo Multi-Turn LLM Jailbreak Attack",
+          "section_title": "7 Conclusion",
+          "text": "In this paper, we presented Crescendo, a novel jailbreak attack, along with its automation tool, Crescendomation. Unlike conventional methods, Crescendo does not require the adversary to explicitly specify the task. Instead, the adversary subtly interacts with the model using primarily benign prompts and gradually directs the model to perform the task, exploiting the model's own responses. Our experiments have shown that Crescendo is highly effective, surpassing other state-of-the-art jailbreak techniques on different LLMs.",
+          "distance": 0.4369184374809265
+        }
+      ],
+      "metadata_filters": {},
+      "timestamp": "2026-03-01T15:46:43.013374",
+      "latency_ms": 3765.7268047332764
+    }
+  ]
+}

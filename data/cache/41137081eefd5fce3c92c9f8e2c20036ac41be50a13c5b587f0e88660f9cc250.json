@@ -1,0 +1,8 @@
+{
+  "model": "claude-haiku-4-5",
+  "system_prompt_hash": "7c1ee11d93629999",
+  "user_message_hash": "4be929b35b55106f",
+  "max_tokens": 2048,
+  "response": "EVIDENCE MISSING\n\nThe provided context chunks do not contain any information about jailbreak attacks using formal mathematics. The sources discuss various jailbreak techniques including:\n\n- Prompt-level attacks using semantic manipulation [pair, pair_c05]\n- Token-level attacks [pair, pair_c03]\n- Simple attacks like prefix injection, refusal suppression, Base64 encoding, and style injection [how_do_llms_fail, how_do_llms_fail_c13]\n- Combination attacks mixing multiple techniques [how_do_llms_fail, how_do_llms_fail_c16]\n- ASCII art-based jailbreaks [artprompt, artprompt_c16]\n\nHowever, none of these sources address formal mathematics as a jailbreak methodology. To answer your question comprehensively, I would need access to additional context chunks that specifically discuss mathematical formulations or formal logic-based attack strategies.",
+  "timestamp": "2026-03-01T19:51:43.184922+00:00"
+}

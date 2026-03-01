@@ -1,0 +1,8 @@
+{
+  "model": "claude-haiku-4-5",
+  "system_prompt_hash": "7c1ee11d93629999",
+  "user_message_hash": "85142075b7b8308f",
+  "max_tokens": 2048,
+  "response": "# Key Risk Categories in the NIST AI Risk Management Framework\n\nThe NIST AI Risk Management Framework (AI RMF) is organized around **four core functions** rather than risk categories: [nist.ai.100-1, nist.ai.100-1_c28]\n\n1. **GOVERN** - Establishes the governance structure and cross-cutting oversight\n2. **MAP** - Identifies and maps risks\n3. **MEASURE** - Analyzes and measures identified risks\n4. **MEASURE** - Evaluates measured risks\n\nWithin the **MANAGE function** specifically, the framework defines two primary categories: [nist.ai.100-1, nist.ai.100-1_c39]\n\n1. **MANAGE 1: AI Risk Prioritization and Response** - Addresses how AI risks identified from MAP and MEASURE are prioritized, responded to, and managed based on impact, likelihood, and available resources. This includes developing documented responses such as mitigating, transferring, avoiding, or accepting risks.\n\n2. **MANAGE 2: Benefit Maximization and Impact Minimization** - Focuses on strategies to maximize AI benefits while minimizing negative impacts, including resource allocation, sustaining value, responding to unknown risks, and mechanisms for disengaging systems that underperform.\n\n3. **MANAGE 3: Third-Party Risk Management** - Addresses risks and benefits from third-party entities.\n\nThe framework emphasizes that these functions should be applied iteratively throughout the AI system lifecycle and adapted to organizational context and needs. [nist.ai.100-1, nist.ai.100-1_c28]",
+  "timestamp": "2026-03-01T19:48:24.745709+00:00"
+}
